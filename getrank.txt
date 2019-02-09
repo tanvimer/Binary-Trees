@@ -1,0 +1,85 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+public class Main{
+    public node root;
+    class node{
+        int key,n;
+        node left,right;
+        public node(int key){
+            this.key=key;
+            n=1;
+        }
+    }
+    public boolean isEmpty(){
+        return size()==0;
+    }
+    public int size(){
+        return size1(root);
+    }
+    public int size1(node x){
+        return x==null ?0 :x.n;
+    }
+    public Integer get(int key){
+        node x=get1(root,key);
+        return x==null ?null :x.key;
+    }
+    public node get1(node x,Integer key){
+        if(x==null)
+        return null;
+        int c=key.compareTo(x.key);
+        if(c==0)
+        return x;
+        if(c<0)
+        return get1(x.left,key);
+        else
+        return get1(x.right,key);
+    }
+    public void insert(int key){
+        root=insert1(root,key);
+    }
+    public node insert1(node root,int key){
+        if(root==null)
+        
+            return new node(key);
+        if(key<root.key)
+            root.left=insert1(root.left,key);
+        else if(key>root.key)
+            root.right=insert1(root.right,key);
+        else 
+        return root;
+        
+        root.n=1+size1(root.left)+size1(root.right);
+        return root;
+    }
+    public Integer getRank(int key){
+        return getRank1(root,key);
+    }
+    public int getRank1(node root,int key){
+        if(get(key)==null)
+        return -1;
+        if(root==null)
+        return 0;
+        if(root.key==key)
+        return size1(root.left);
+        if(root.key>key)
+        return getRank1(root.left,key);
+        else
+            return 1+size1(root.left)+getRank1(root.right,key);
+        
+    }
+     public static void main(String[] args){
+        Scanner in = new Scanner(System.in);
+        Main bst = new Main();
+        int n = in.nextInt();
+        for(int i = 0 ; i < n ; i++){
+            bst.insert(in.nextInt());
+        }
+        int m = in.nextInt();
+        for(int i = 0 ; i < m ; i++){
+            System.out.println(bst.getRank(in.nextInt()));
+        }
+    }
+}
