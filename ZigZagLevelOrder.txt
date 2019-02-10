@@ -1,0 +1,35 @@
+public class Solution {
+    public ArrayList<ArrayList<Integer>> zigzagLevelOrder(TreeNode A) {
+        ArrayList<ArrayList<Integer>> res =new ArrayList<ArrayList<Integer>>();
+        Stack<TreeNode> st = new Stack<TreeNode>();
+        Stack<TreeNode> cst = new Stack<TreeNode>();
+        ArrayList<Integer> arr = new ArrayList<Integer>();
+        boolean ltr = true;
+        cst.push(A);
+        while(cst.empty() == false){
+            TreeNode node = cst.pop();
+            arr.add(node.val);
+            if(ltr == true){
+                if(node.left!=null)
+                st.push(node.left);
+                if(node.right!=null)
+                st.push(node.right);
+            }
+            else{
+                if(node.right!=null)
+                st.push(node.right);
+                if(node.left!=null)
+                st.push(node.left);
+            }
+            if(cst.empty()){
+                ltr=!ltr;
+                Stack<TreeNode> temp = cst;
+                cst = st;
+                st =temp;
+                res.add(arr);
+                arr.clear();
+            }
+        }
+        return res;
+    }
+}

@@ -1,0 +1,27 @@
+class DiagonalPrint
+{
+     public void StoreDiagonal(TreeNode root, int d ,HashMap<Integer,ArrayList<Integer>> hm){
+         if(root == null)
+         return;
+          ArrayList<Integer> arr=hm.get(d);
+         if(hm.get(d) == null){
+         arr = new ArrayList<Integer>();
+         arr.add(root.data);
+         }
+         else
+         arr.add(root.data);
+         hm.put(d,arr);
+         StoreDiagonal(root.left,d+1,hm);
+         StoreDiagonal(root.right,d,hm);
+     }
+     public void diagonalPrint(TreeNode root)
+      {
+          HashMap<Integer , ArrayList<Integer>> hm= new HashMap<Integer, ArrayList<Integer>>();
+          StoreDiagonal(root , 0 , hm);
+          for(int i=0;i<hm.size();i++){
+              ArrayList<Integer> arr=hm.get(i);
+              for(int j = 0;j<arr.size();j++)
+              System.out.print(arr.get(j)+" ");
+          }
+      }
+}
