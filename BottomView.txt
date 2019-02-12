@@ -1,0 +1,31 @@
+class BottomView
+{
+    class qnode{
+        Node node;
+        int hd;
+        qnode(Node node,int hd){
+            this.node = node;
+            this.hd = hd;
+        }
+    }
+    Queue<qnode> q =new LinkedList<qnode>();
+    Map<Integer,Node> mp = new TreeMap<Integer,Node>(); 
+    public void bottomView(Node root)
+    {
+        if(root == null)
+        return;
+        else 
+        q.add(new qnode(root,0));
+        while(!q.isEmpty()){
+            qnode temp = q.poll();
+            mp.put(temp.hd,temp.node);
+            if(temp.node.left!=null)
+            q.add(new qnode(temp.node.left,temp.hd-1));
+            if(temp.node.right!=null)
+            q.add(new qnode(temp.node.right,temp.hd+1));
+        }
+        for(Entry<Integer,Node> entry : mp.entrySet())
+        System.out.print(entry.getValue().data+" ");
+    }
+}
+	
