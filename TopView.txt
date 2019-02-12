@@ -1,0 +1,36 @@
+class TopView
+{
+    class qnode{
+        TreeNode node;
+        int hd;
+        qnode(TreeNode node,int hd){
+            this.node=node;
+            this.hd=hd;
+        }
+    }
+    Queue<qnode> q = new LinkedList<qnode>();
+    Map<Integer,TreeNode> mp = new TreeMap<Integer,TreeNode>();
+    public void printTopView(TreeNode root)
+    {
+        if(root == null)
+        return;
+        else
+        q.add(new qnode(root,0));
+        while(q.isEmpty() == false){
+            qnode temp = q.poll();
+            if(!mp.containsKey(temp.hd))
+            mp.put(temp.hd,temp.node);
+            
+            if(temp.node.left != null)
+                q.add(new qnode(temp.node.left,temp.hd-1));
+            
+            if(temp.node.right != null)
+            
+                q.add(new qnode(temp.node.right,temp.hd+1));
+             
+        }
+          for (Entry<Integer, TreeNode> entry : mp.entrySet()) { 
+            System.out.print(entry.getValue().data); 
+        } 
+    }
+}
